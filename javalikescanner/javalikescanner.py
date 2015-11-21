@@ -7,6 +7,7 @@ class JavaLikeScanner:
 	def __init__(self, contents):
 		"""Create the scanner and initalize its contents."""
 		self.contents = contents
+		self.last_delimiter = ""
 
 	def next(self):
 		"""Return the next token in the scanner and remove that token
@@ -18,6 +19,8 @@ class JavaLikeScanner:
 				if character != " " and character != "\n" and character != "\t":
 					next_token = next_token + character
 				else:
+					# Record the delimeter used, so that it can be readded later if an operation does not succede
+					self.last_delimiter = character
 					break
 		if next_token != "":
 			return next_token
@@ -38,4 +41,16 @@ class JavaLikeScanner:
 		if line != "":
 			return line
 		else:
+			return None
+
+	def next_int(self):
+		"""Return the next integer in the scanner and remove that
+		integer from the scanner."""
+		token = self.next()
+		try:
+			token_integer = int(token)
+			return token_integer
+		except ValueError:
+			# Since the token was not an integer, readd the token and the delimiter back into the scanner
+			self.contents = token + self.last_delimiter + self.contents
 			return None
