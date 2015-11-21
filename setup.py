@@ -1,7 +1,8 @@
 """The script which is used when packaging the library."""
 from setuptools import setup
 
-setup(name='javalikescanner',
+setup( \
+      name='javalikescanner',
       version='0.1',
       description='A Python library which includes a class which functions' + \
             'simmilarly to the default Scanner class of Java.',
@@ -9,4 +10,8 @@ setup(name='javalikescanner',
       author='Christopher Randall Wells',
       author_email='cwellsny@nycap.rr.com',
       license='MIT',
-      packages=['javalikescanner'])
+      packages=['javalikescanner'],
+      install_requires=[
+          'numpy',
+      ]
+     )
