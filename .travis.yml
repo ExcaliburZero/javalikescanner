@@ -1,10 +1,11 @@
 language: python
 python:
-  - "3.5"
-  - "nightly"
+  - "3.4"
 install:
   - pip install coveralls
+  - pip install pylint
 script:
   - nosetests  --with-coverage --cover-package=javalikescanner
+  - pylint --rcfile=pylint.conf javalikescanner
 after_success:
   - coveralls
