@@ -1,7 +1,7 @@
 """A module containg the JavaLikeScanner class."""
 
 class JavaLikeScanner:
-	"""A class which allows a given string to be scanend through and broken
+	"""A class which allows a given string to be scanned through and broken
 	up into various tokens."""
 
 	def __init__(self, contents):
@@ -11,7 +11,10 @@ class JavaLikeScanner:
 
 	def next(self):
 		"""Return the next token in the scanner and remove that token
-		from the scanner."""
+		from the scanner.
+
+		:returns: The next token in the scanner as a string.
+		"""
 		next_token = ""
 		self.last_delimiter = ""
 		if len(self.contents) > 0:
@@ -41,7 +44,10 @@ class JavaLikeScanner:
 
 	def next_line(self):
 		"""Return the next line in the scanner and remove that line from
-		the scanner."""
+		the scanner.
+
+		:returns: The next line in the scanner as a string.
+		"""
 		line = ""
 		if len(self.contents) > 0:
 			for character in self.contents:
@@ -57,7 +63,10 @@ class JavaLikeScanner:
 
 	def next_int(self):
 		"""Return the next integer in the scanner and remove that
-		integer from the scanner."""
+		integer from the scanner.
+
+		:returns: The next integer in the scanner as an integer.
+		"""
 		token = self.next()
 
 		# Handle the possiblity of an empty token
