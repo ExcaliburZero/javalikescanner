@@ -13,18 +13,24 @@ class JavaLikeScanner:
 		"""Return the next token in the scanner and remove that token
 		from the scanner."""
 		next_token = ""
+		self.last_delimiter = ""
 		if len(self.contents) > 0:
 			for character in self.contents:
 				self.contents = self.contents[1:]
 				if character != " " and character != "\n" and character != "\t":
 					next_token = next_token + character
 				else:
-					# Record the delimeter used, so that it can be readded later if an operation does not succede
-					self.last_delimiter = character
-					break
+					# Check to make sure that a token has been found
+					if next_token != "":
+						# Record the delimeters used, so that they can be readded later if an operation
+						# does not succede
+						self.last_delimiter = self.last_delimiter + character
+						break
 		if next_token != "":
 			return next_token
 		else:
+			# Since no token was found, readd delimiter if one was found
+			self.contents = self.last_delimiter + self.contents
 			return None
 
 	def next_line(self):
