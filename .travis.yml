@@ -7,5 +7,6 @@ install:
 script:
   - nosetests  --with-coverage --cover-package=javalikescanner
   - pylint --rcfile=pylint.conf javalikescanner
+  - pylint --rcfile=pylint.conf tests
 after_success:
   - coveralls
