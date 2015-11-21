@@ -16,17 +16,26 @@ class TestJavaLikeScanner(unittest.TestCase):
 		self.assertEqual(scanner.next(), "six")
 		self.assertEqual(scanner.next(), None)
 
-		scanner = JavaLikeScanner("seven  eight\t\tnine\n\t ten")
+		scanner = JavaLikeScanner("seven  eight\t\tnine\n\t ten\n\t \t")
 		self.assertEqual(scanner.next(), "seven")
 		self.assertEqual(scanner.next(), "eight")
 		self.assertEqual(scanner.next(), "nine")
 		self.assertEqual(scanner.next(), "ten")
+		self.assertEqual(scanner.next_line(), None)
+		self.assertEqual(scanner.next_line(), "\t \t")
+		self.assertEqual(scanner.next_line(), None)
+
+		scanner = JavaLikeScanner("")
+		self.assertEqual(scanner.next(), None)
 
 	def test_next_line(self):
 		"""A test of the next_line method of the JavaLikeScanner class."""
 		scanner = JavaLikeScanner("one two three\nfour\tfive six")
 		self.assertEqual(scanner.next_line(), "one two three")
 		self.assertEqual(scanner.next_line(), "four\tfive six")
+		self.assertEqual(scanner.next_line(), None)
+
+		scanner = JavaLikeScanner("")
 		self.assertEqual(scanner.next_line(), None)
 
 	def test_next_int(self):
@@ -42,11 +51,20 @@ class TestJavaLikeScanner(unittest.TestCase):
 		self.assertEqual(scanner.next_int(), None)
 		self.assertEqual(scanner.next_int(), None)
 
-		scanner = JavaLikeScanner("1 1.5\t5")
+		scanner = JavaLikeScanner("1 \t2 1.5\t5")
 		self.assertEqual(scanner.next_int(), 1)
+		self.assertEqual(scanner.next_int(), 2)
 		self.assertEqual(scanner.next_int(), None)
 		self.assertEqual(scanner.next_int(), None)
 		self.assertEqual(scanner.next_line(), "1.5\t5")
+
+		scanner = JavaLikeScanner("1\t \t")
+		self.assertEqual(scanner.next_int(), 1)
+		self.assertEqual(scanner.next_int(), None)
+		self.assertEqual(scanner.next_line(), "\t \t")
+
+		scanner = JavaLikeScanner("")
+		self.assertEqual(scanner.next_int(), None)
 
 if __name__ == '__main__':
 	unittest.main()
