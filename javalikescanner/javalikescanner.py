@@ -8,10 +8,6 @@ class JavaLikeScanner:
 		"""Create the scanner and initalize its contents."""
 		self.contents = contents
 
-	def print_contents(self):
-		"""Print out the contents of the scanner."""
-		print(self.contents)
-
 	def next(self):
 		"""Return the next token in the scanner and remove that token
 		from the scanner."""
