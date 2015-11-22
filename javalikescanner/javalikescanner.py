@@ -37,16 +37,29 @@ class JavaLikeScanner:
 			# Since no token was found, return None
 			return None
 
+	def has_next(self):
+		"""Return whether or not there is a valid next token in the
+		scanner or not.
+
+		:returns: Whether or not there is a next token in the scanner
+		as a boolean.
+		"""
+		token = self.__get_token()
+		if token is not None:
+			return True
+		else:
+			return False
+
 	def next(self):
 		"""Return the next token in the scanner and remove that token
 		from the scanner.
 
 		:returns: The next token in the scanner as a string.
 		"""
-		token = self.__get_token()
-		if token is not None:
+		if self.has_next():
 			# Since there is a next token, remove the token and its pre-delimiters from the scanner, and
 			# return the token
+			token = self.__get_token()
 			size = len(token['pre-delimiter']) + len(token['token'])
 			self.contents = self.contents[size:]
 			return token['token']
@@ -54,24 +67,60 @@ class JavaLikeScanner:
 			# Since there is no next token in the scanner, return None
 			return None
 
+	def has_next_line(self):
+		"""Return whether or not there is a next line in the scanner.
+
+		:returns: Whether or not there is a next line in the scanner as
+		a boolean.
+		"""
+		if self.contents != "":
+			return True
+		else:
+			return False
+
 	def next_line(self):
 		"""Return the next line in the scanner and remove that line from
 		the scanner.
 
 		:returns: The next line in the scanner as a string.
 		"""
-		line = ""
-		if len(self.contents) > 0:
+		if self.has_next_line():
+			line = ""
+			has_delimiter = False
 			for character in self.contents:
-				self.contents = self.contents[1:]
 				if character != "\n":
 					line = line + character
 				else:
+					has_delimiter = True
 					break
-		if line != "":
+			size = len(line)
+			# Account for the delimiter
+			if has_delimiter:
+				size = size + 1
+			self.contents = self.contents[size:]
 			return line
 		else:
 			return None
+
+	def has_next_int(self):
+		"""Return whether the next token in the scanner is an integer
+		or not.
+
+		:returns: Whether or not the next token in the scanner is an
+		integer as a boolean.
+		"""
+		token = self.__get_token()
+
+		# Handle the possiblity of an empty token
+		if token == None:
+			return False
+
+		# Attempt to convert the token into an integer in order to tell if it is an integer or not
+		try:
+			int(token['token'])
+			return True
+		except ValueError:
+			return False
 
 	def next_int(self):
 		"""Return the next integer in the scanner and remove that
@@ -79,21 +128,13 @@ class JavaLikeScanner:
 
 		:returns: The next integer in the scanner as an integer.
 		"""
-		token = self.__get_token()
-
-		# Handle the possiblity of an empty token
-		if token == None:
-			token = {'token': "", 'pre-delimiter': ""}
-
-		# Attempt to convert the token into an integer
-		try:
+		if self.has_next_int():
+			token = self.__get_token()
 			token_integer = int(token['token'])
 
-			# Since the token converted to an integer, remove the token and its pre-delimiters from the
-			# scanner and return it
+			# Remove the token and its pre-delimiters from the scanner and return it
 			size = len(token['pre-delimiter']) + len(token['token'])
 			self.contents = self.contents[size:]
 			return token_integer
-		except ValueError:
-			# Since the token was not an integer, return None
+		else:
 			return None
