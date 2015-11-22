@@ -21,9 +21,8 @@ class TestJavaLikeScanner(unittest.TestCase):
 		self.assertEqual(scanner.next(), "eight")
 		self.assertEqual(scanner.next(), "nine")
 		self.assertEqual(scanner.next(), "ten")
-		self.assertEqual(scanner.next_line(), None)
-		self.assertEqual(scanner.next_line(), "\t \t")
-		self.assertEqual(scanner.next_line(), None)
+		self.assertEqual(scanner.next(), None)
+		self.assertEqual(scanner.contents, "\n\t \t")
 
 		scanner = JavaLikeScanner("")
 		self.assertEqual(scanner.next(), None)
@@ -34,6 +33,7 @@ class TestJavaLikeScanner(unittest.TestCase):
 		self.assertEqual(scanner.next_line(), "one two three")
 		self.assertEqual(scanner.next_line(), "four\tfive six")
 		self.assertEqual(scanner.next_line(), None)
+		self.assertEqual(scanner.contents, "")
 
 		scanner = JavaLikeScanner("")
 		self.assertEqual(scanner.next_line(), None)
@@ -56,12 +56,12 @@ class TestJavaLikeScanner(unittest.TestCase):
 		self.assertEqual(scanner.next_int(), 2)
 		self.assertEqual(scanner.next_int(), None)
 		self.assertEqual(scanner.next_int(), None)
-		self.assertEqual(scanner.next_line(), "1.5\t5")
+		self.assertEqual(scanner.contents, " 1.5\t5")
 
 		scanner = JavaLikeScanner("1\t \t")
 		self.assertEqual(scanner.next_int(), 1)
 		self.assertEqual(scanner.next_int(), None)
-		self.assertEqual(scanner.next_line(), "\t \t")
+		self.assertEqual(scanner.contents, "\t \t")
 
 		scanner = JavaLikeScanner("")
 		self.assertEqual(scanner.next_int(), None)
