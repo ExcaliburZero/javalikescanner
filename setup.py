@@ -5,7 +5,7 @@ setup( \
       name='javalikescanner',
       version='0.1',
       description='A Python library which includes a class which functions' + \
-            'simmilarly to the default Scanner class of Java.',
+            ' simmilarly to the default Scanner class of Java.',
       long_description=open('README.rst').read(),
       url='https://github.com/ExcaliburZero/javalikescanner',
       author='Christopher Randall Wells',
