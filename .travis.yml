@@ -8,5 +8,7 @@ script:
   - nosetests  --with-coverage --cover-package=javalikescanner
   - pylint --rcfile=pylint.conf javalikescanner
   - pylint --rcfile=pylint.conf tests
+  - pylint --rcfile=pylint.conf setup.py
+  - python setup.py check
 after_success:
   - coveralls
