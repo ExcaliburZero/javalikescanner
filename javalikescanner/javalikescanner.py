@@ -1,6 +1,6 @@
 """A module containg the JavaLikeScanner class."""
 
-class JavaLikeScanner:
+class JavaLikeScanner(object):
 	"""A class which allows a given string to be scanned through and broken
 	up into various tokens."""
 
