@@ -1,15 +1,22 @@
 """A module containg the JavaLikeScanner class."""
 
 class JavaLikeScanner(object):
-	"""A class which allows a given string to be scanned through and broken
-	up into various tokens."""
+	"""
+	A class which allows a given string to be scanned through and broken up into various tokens.
+	"""
 
 	def __init__(self, contents):
-		"""Create the scanner and initalize its contents."""
+		"""
+		Create the scanner and initalize its contents.
+
+		:param str contents: The contents of the scanner.
+		"""
 		self.contents = contents
 
 	def __get_token(self):
-		"""Find and return the next token and its pre-delimiters if it has any.
+		"""
+		Find and return the next token and its pre-delimiters if it has any. If there is no next token,
+		then return None.
 
 		:returns: The next token and its pre-delimiters as a dictionary.
 		"""
@@ -38,11 +45,10 @@ class JavaLikeScanner(object):
 			return None
 
 	def has_next(self):
-		"""Return whether or not there is a valid next token in the
-		scanner or not.
+		"""
+		Return whether or not there is a valid next token in the scanner or not.
 
-		:returns: Whether or not there is a next token in the scanner
-		as a boolean.
+		:returns: Whether or not there is a next token in the scanner as a boolean.
 		"""
 		token = self.__get_token()
 		if token is not None:
@@ -51,8 +57,10 @@ class JavaLikeScanner(object):
 			return False
 
 	def next(self):
-		"""Return the next token in the scanner and remove that token
-		from the scanner.
+		"""
+		Return the next token in the scanner and remove that token from the scanner.
+
+		Returns None if there is no next token in the scanner.
 
 		:returns: The next token in the scanner as a string.
 		"""
@@ -68,10 +76,10 @@ class JavaLikeScanner(object):
 			return None
 
 	def has_next_line(self):
-		"""Return whether or not there is a next line in the scanner.
+		"""
+		Return whether or not there is a next line in the scanner.
 
-		:returns: Whether or not there is a next line in the scanner as
-		a boolean.
+		:returns: Whether or not there is a next line in the scanner as a boolean.
 		"""
 		if self.contents != "":
 			return True
@@ -79,8 +87,10 @@ class JavaLikeScanner(object):
 			return False
 
 	def next_line(self):
-		"""Return the next line in the scanner and remove that line from
-		the scanner.
+		"""
+		Return the next line in the scanner and remove that line from the scanner.
+
+		Returns None if there is not a next line in the scanner.
 
 		:returns: The next line in the scanner as a string.
 		"""
@@ -103,16 +113,15 @@ class JavaLikeScanner(object):
 			return None
 
 	def has_next_int(self):
-		"""Return whether the next token in the scanner is an integer
-		or not.
+		"""
+		Return whether the next token in the scanner is an integer or not.
 
-		:returns: Whether or not the next token in the scanner is an
-		integer as a boolean.
+		:returns: Whether or not the next token in the scanner is an integer as a boolean.
 		"""
 		token = self.__get_token()
 
 		# Handle the possiblity of an empty token
-		if token == None:
+		if token is None:
 			return False
 
 		# Attempt to convert the token into an integer in order to tell if it is an integer or not
@@ -123,8 +132,11 @@ class JavaLikeScanner(object):
 			return False
 
 	def next_int(self):
-		"""Return the next integer in the scanner and remove that
-		integer from the scanner.
+		"""
+		Return the next integer in the scanner and remove that integer from the scanner.
+
+		Returns None if there is not a next token in the scanner, or if the next token in the scanner is
+		not an integer.
 
 		:returns: The next integer in the scanner as an integer.
 		"""
