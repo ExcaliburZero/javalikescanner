@@ -1,6 +1,11 @@
 javalikescanner
 ===============
 
+.. image:: https://travis-ci.org/ExcaliburZero/javalikescanner.svg?branch=master
+    :target: https://travis-ci.org/ExcaliburZero/javalikescanner
+.. image:: https://coveralls.io/repos/ExcaliburZero/javalikescanner/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/github/ExcaliburZero/javalikescanner?branch=master 
+
 Java Like Scanner is a Python library which includes a class which functions simmilarly to the default Scanner class of Java.
 
 Documentation & API
