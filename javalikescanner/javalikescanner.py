@@ -1,5 +1,8 @@
 """A module containg the JavaLikeScanner class."""
 
+from .exceptions import NoSuchElementException
+from .exceptions import InputMismatchException
+
 class JavaLikeScanner(object):
 	"""
 	A class which allows a given string to be scanned through and broken up into various tokens.
@@ -72,8 +75,8 @@ class JavaLikeScanner(object):
 			self.contents = self.contents[size:]
 			return token['token']
 		else:
-			# Since there is no next token in the scanner, return None
-			return None
+			# Since there is no next token in the scanner, raise an exception
+			raise NoSuchElementException
 
 	def has_next_line(self):
 		"""
@@ -110,7 +113,8 @@ class JavaLikeScanner(object):
 			self.contents = self.contents[size:]
 			return line
 		else:
-			return None
+			# Since there is no next line in the scaner, raise an exception
+			raise NoSuchElementException
 
 	def has_next_int(self):
 		"""
@@ -149,4 +153,7 @@ class JavaLikeScanner(object):
 			self.contents = self.contents[size:]
 			return token_integer
 		else:
-			return None
+			if self.has_next():
+				raise InputMismatchException
+			else:
+				raise NoSuchElementException

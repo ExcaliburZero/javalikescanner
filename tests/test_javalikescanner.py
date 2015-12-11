@@ -2,6 +2,8 @@
 import unittest
 
 from javalikescanner import JavaLikeScanner
+from javalikescanner import NoSuchElementException
+from javalikescanner import InputMismatchException
 
 class TestJavaLikeScanner(unittest.TestCase):
 	"""A class which defines the various methods used to test the JavaLikeScanner class."""
@@ -14,29 +16,54 @@ class TestJavaLikeScanner(unittest.TestCase):
 		self.assertEqual(scanner.next(), "four")
 		self.assertEqual(scanner.next(), "five")
 		self.assertEqual(scanner.next(), "six")
-		self.assertEqual(scanner.next(), None)
+		error = False
+		try:
+			scanner.next()
+		except NoSuchElementException as exception:
+			error = True
+		self.assertEqual(error, True)
 
 		scanner = JavaLikeScanner("seven  eight\t\tnine\n\t ten\n\t \t")
 		self.assertEqual(scanner.next(), "seven")
 		self.assertEqual(scanner.next(), "eight")
 		self.assertEqual(scanner.next(), "nine")
 		self.assertEqual(scanner.next(), "ten")
-		self.assertEqual(scanner.next(), None)
+		error = False
+		try:
+			scanner.next()
+		except NoSuchElementException as exception:
+			error = True
+		self.assertEqual(error, True)
 		self.assertEqual(scanner.contents, "\n\t \t")
 
 		scanner = JavaLikeScanner("")
-		self.assertEqual(scanner.next(), None)
+		error = False
+		try:
+			scanner.next()
+		except NoSuchElementException as exception:
+			error = True
+		self.assertEqual(error, True)
 
 	def test_next_line(self):
 		"""A test of the next_line method of the JavaLikeScanner class."""
 		scanner = JavaLikeScanner("one two three\nfour\tfive six")
 		self.assertEqual(scanner.next_line(), "one two three")
 		self.assertEqual(scanner.next_line(), "four\tfive six")
-		self.assertEqual(scanner.next_line(), None)
+		error = False
+		try:
+			scanner.next_line()
+		except NoSuchElementException as exception:
+			error = True
+		self.assertEqual(error, True)
 		self.assertEqual(scanner.contents, "")
 
 		scanner = JavaLikeScanner("")
-		self.assertEqual(scanner.next_line(), None)
+		error = False
+		try:
+			scanner.next_line()
+		except NoSuchElementException as exception:
+			error = True
+		self.assertEqual(error, True)
 
 	def test_next_int(self):
 		"""A test of the next_int method of the JavaLikeScanner class."""
@@ -48,23 +75,44 @@ class TestJavaLikeScanner(unittest.TestCase):
 		self.assertEqual(scanner.next_int(), 7)
 		self.assertEqual(scanner.next_int(), 8)
 		self.assertEqual(scanner.next_int(), 9)
-		self.assertEqual(scanner.next_int(), None)
-		self.assertEqual(scanner.next_int(), None)
+		for x in range(2):
+			error = False
+			try:
+				scanner.next_int()
+			except InputMismatchException as exception:
+				error = True
+			self.assertEqual(error, True)
 
 		scanner = JavaLikeScanner("1 \t2 1.5\t5")
 		self.assertEqual(scanner.next_int(), 1)
 		self.assertEqual(scanner.next_int(), 2)
-		self.assertEqual(scanner.next_int(), None)
-		self.assertEqual(scanner.next_int(), None)
+		for x in range(2):
+			error = False
+			try:
+				scanner.next_int()
+			except InputMismatchException as exception:
+				error = True
+			self.assertEqual(error, True)
 		self.assertEqual(scanner.contents, " 1.5\t5")
 
 		scanner = JavaLikeScanner("1\t \t")
 		self.assertEqual(scanner.next_int(), 1)
-		self.assertEqual(scanner.next_int(), None)
+		for x in range(2):
+			error = False
+			try:
+				scanner.next_int()
+			except NoSuchElementException as exception:
+				error = True
+			self.assertEqual(error, True)
 		self.assertEqual(scanner.contents, "\t \t")
 
 		scanner = JavaLikeScanner("")
-		self.assertEqual(scanner.next_int(), None)
+		error = False
+		try:
+			scanner.next_int()
+		except NoSuchElementException as exception:
+			error = True
+		self.assertEqual(error, True)
 
 	def test_has_next(self):
 		"""A test of the has_next method of the JavaLikeScanner class."""
